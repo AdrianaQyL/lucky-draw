@@ -30,10 +30,13 @@ export default class LuckyBoard extends PureComponent {
     startDraw (setCurrentIndex) {
         if (this.state.currentGems - this.props.gemCost >= 0) {
             console.log("lucky draw start!")
+            // deduct gem cost
             this.setState({
                 currentGems: this.state.currentGems - this.props.gemCost
             })
+            // get the prize index
             let prizeIndex = this.getPrize()
+            // circular flashing light timer
             if (this.timer) {
                 clearTimeout(this.timer)
             }
@@ -99,6 +102,15 @@ export default class LuckyBoard extends PureComponent {
         })
         if (this.state.circle >= 5 && this.state.currentIndex === prizeIndex) {
             clearTimeout(this.timer)
+            // gain gems prize
+            let prizeName = this.props.prizes[this.state.currentIndex].name
+            if (prizeName.indexOf("矿石") > 0) {
+                let gemAdd = prizeName.substring(0, prizeName.indexOf("矿石"));
+                this.setState({
+                    currentGems: this.state.currentGems + parseInt(gemAdd)
+                })
+            }
+            // update list for all the earned prizes
             let newPrizeArray = [...this.state.gotPrizeArray]
             newPrizeArray.push(this.props.prizes[this.state.currentIndex])
             this.setState({

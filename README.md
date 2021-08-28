@@ -41,7 +41,7 @@ We adopt a gem system here to add more fun to this game. You will start with 40 
 
 Currently we are doing a frontend demo so we will implement the prize selection algorithm on the frontend as well. Later we will add some backend services to this project.
 
-### Timer
+#### Timer
 
 We applied a timer to construct the flashing light effect on the board. Everytime when a player click the start button and call the `startDraw` function, the lights will be on in turn (call the `tick` function) every 0.08 seconds. We let the light goes around for 5 times to make it look closer to a real-life lucky draw.
 

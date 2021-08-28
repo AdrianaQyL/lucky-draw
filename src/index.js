@@ -4,14 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const configuration = {
-  startIndex: 0,
-  interval: 100
-};
-
 ReactDOM.render(
   <React.StrictMode>
-    <App {...configuration}/>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
