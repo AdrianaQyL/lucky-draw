@@ -1,0 +1,53 @@
+.lucky-board-container {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #282c34;
+    color: white;
+}
+
+.lucky-board {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.items-wrapper {
+    margin: 40px;
+    max-width: 400px;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+  
+.rotate-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 8px;
+    color: black;
+}
+  
+.chosen {
+    background-color: #ffeab6;
+}
+  
+.rotate-item img {
+    height: 50px;
+    width: 50px;
+    margin: 20px 20px 0px;
+}
+  
+.rotate-item .text {
+    font-size: 14px;
+    margin: 10px;
+}

@@ -1,0 +1,54 @@
+.background-cover {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog {
+    position: absolute;
+    height: 200px;
+    width: 300px;
+    background-color: white;
+    border-radius: 8px;
+    color: black;
+    z-index: 6;
+}
+
+.header {
+    font-size: 16px;
+    font-weight: 500;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    max-height: 80px;
+    overflow: scroll;
+}
+
+.content img {
+    height: 30px;
+    width: 30px;
+    margin: 10px 10px 0px;
+}
+
+.foot {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: inherit;
+    bottom: 0;
+}
