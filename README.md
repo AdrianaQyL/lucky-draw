@@ -2,11 +2,48 @@
 
 This is a lucky draw board with different potential prizes. Try your luck today!
 
+[![](https://img.shields.io/badge/front_end-React-success.svg)]({linkUrl})
+[![](https://img.shields.io/badge/back_end-Node.js-green.svg)]({linkUrl})
+[![](https://img.shields.io/badge/integrate_with-Airtable-yellow.svg)]({linkUrl})
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## How to run the project locally
 
-If you want to run this project on your computer, you can run the following commands in your terminal:
+The whole project contains two GitHub repositories. This is the frontend part. You can find the backend service part here: [lucky-draw-service](https://github.com/AdrianaQyL/lucky-draw-service).
+
+If you want to run this project on your computer, you can execute the following commands in your terminal.
+
+### Backend
+
+Firstly you need to start the backend service:
+
+``` bash
+ $ git clone git@github.com:AdrianaQyL/lucky-draw-service.git
+ $ cd lucky-draw-backend
+```
+
+Since this project employs [Airtable](https://www.airtable.com/) to manage the prize items, you need to create a table called `Prizes` in your Airtable Base and replace the `YOUR_API_KEY` and `YOUR_AIRTABLE_BASE_ID` in `PrizeController.js`.
+
+Now you can start the service:
+
+``` bash
+ $ node index.js
+```
+
+Then our service would run on http://localhost:3001.
+
+### Airtable
+
+In your Airtable Base, where you created the `Prizes` table, you will need to configure four fields for each prize item.
+
+- name: The prize item's name.
+- weight: The bigger the number you put in this field is, the more likely the player is going to get this prize.
+- index: An index of 0-7 which decides the item's position on the board.
+- image: An URL of the prize item's image file path.
+
+### Frontend
 
 ``` bash
  $ git clone git@github.com:AdrianaQyL/lucky-draw.git
@@ -14,7 +51,7 @@ If you want to run this project on your computer, you can run the following comm
  $ npm install
  $ npm start
 ```
-These commands will run the project in development mode. Open browser and type http://localhost:3000 to view it.
+These commands will run the frontend project in development mode. Open your browser and type http://localhost:3000 to view it.
 
 <!-- ## Deployed online version -->
 
@@ -43,7 +80,7 @@ Currently we are doing a frontend demo so we will implement the prize selection 
 
 #### Timer
 
-We applied a timer to construct the flashing light effect on the board. Everytime when a player click the start button and call the `startDraw` function, the lights will be on in turn (call the `tick` function) every 0.08 seconds. We let the light goes around for 5 times to make it look closer to a real-life lucky draw.
+We applied a timer to construct the flashing light effect on the board. Every time when a player clicks the start button and calls the `startDraw` function, the lights will be on in turn (call the `tick` function) every 0.08 seconds. We let the light goes around 5 times to make it look closer to a real-life lucky draw.
 
 ```
 if (this.timer) {
@@ -84,7 +121,7 @@ tick (prizeIndex) {
 
 Since we have a weight for each prize (which controls the probability that you get each prize), we need an algorithm to randomly select a prize with the weights considered. 
 
-We create a new array and the prize with a weight more than 1 will be added by multiple times. For example, if prize A has a weight 2, and prize B has a weight 3, then in the new array we will have two prize A's and three prize B's.
+We create a new array and the prize with a weight of more than 1 will be added by multiple times. For example, if prize A has a weight of 2, and prize B has a weight of 3, then in the new array we will have two prize As and three prize Bs.
 
 After that, we need to shuffle our new array to make the selection random enough. There are two functions, `shuffle` and `getRandomIndex`, that we use to complete this task.
 
@@ -106,6 +143,21 @@ getRandomIndex (start, end) {
 }
 ```
 
+### Version 2: Implement lucky draw service on the backend, and use Airtable for prize configuration
+
+#### APIs
+
+**getConfiguration**
+
+Fetch data configured on Airtable (the prize items data for now), send it back to the frontend.
+
+**selectPrize**
+
+Now we move the prize selection service to the backend to make it more secure and sound. The frontend would only be responsible for accepting the result and render it.
+
+#### Airtable APIs
+
+Please refer to [Airtable API](https://airtable.com/api).
 
 
 ## Disclaimer
