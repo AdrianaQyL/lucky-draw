@@ -1,8 +1,10 @@
 // import logo from './logo.svg';
-// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import LuckyBoard from './components/LuckyBoard';
+import PrizeApi from "./api/PrizeApi";
 
+// default data
 const configuration = {
   startIndex: 0,
   startGemNum: 80,
@@ -51,14 +53,30 @@ const configuration = {
   }]
 };
 
+
 function App() {
+
+  const [config, setConfig] = useState(configuration)
   
-  // const [currentIndex, setCurrentIndex] = useState(7);
-  
+
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    
+    let mounted = true;
+    PrizeApi.getConfiguration()
+      .then(res => {
+        // console.log(res)
+        if(mounted) {
+          setConfig(res)
+        }
+      })
+    return () => mounted = false;
+  }, [])
+
   return (
     <div className="App">
       {/* <header className="App-header"> */}
-        <LuckyBoard {...configuration}/>
+        <LuckyBoard {...config}/>
       {/* </header> */}
     </div>
   );

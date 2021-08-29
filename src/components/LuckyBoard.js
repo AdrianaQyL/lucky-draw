@@ -1,6 +1,7 @@
 import { PureComponent } from "react";
 import Dialog from "./Dialog";
 import "./LuckyBoard.css"
+import PrizeApi from "../api/PrizeApi"
 
 export default class LuckyBoard extends PureComponent {
     constructor(props) {
@@ -17,9 +18,11 @@ export default class LuckyBoard extends PureComponent {
         }
 
         this.startDraw = this.startDraw.bind(this)
-        this.getPrize = this.getPrize.bind(this)
-        this.shuffle = this.shuffle.bind(this)
-        this.getRandomIndex = this.getRandomIndex.bind(this)
+        /* Version 1 code start */
+        // this.getPrize = this.getPrize.bind(this)
+        // this.shuffle = this.shuffle.bind(this)
+        // this.getRandomIndex = this.getRandomIndex.bind(this)
+        /* Version 1 code end */
         this.closePrizeDialog = this.closePrizeDialog.bind(this)
         this.closeNoGemDialog = this.closeNoGemDialog.bind(this)
         this.showListDialog = this.showListDialog.bind(this)
@@ -28,22 +31,41 @@ export default class LuckyBoard extends PureComponent {
     }
 
     startDraw (setCurrentIndex) {
+
         if (this.state.currentGems - this.props.gemCost >= 0) {
             console.log("lucky draw start!")
             // deduct gem cost
             this.setState({
                 currentGems: this.state.currentGems - this.props.gemCost
             })
-            // get the prize index
-            let prizeIndex = this.getPrize()
-            // circular flashing light timer
-            if (this.timer) {
-                clearTimeout(this.timer)
-            }
-            this.timer = setInterval(
-                () => this.tick(prizeIndex),
-                80
-            )
+            /* Version 1 code start */
+            // // get the prize index
+            // let prizeIndex = this.getPrize()
+            // // circular flashing light timer
+            // if (this.timer) {
+            //     clearTimeout(this.timer)
+            // }
+            // this.timer = setInterval(
+            //     () => this.tick(prizeIndex),
+            //     80
+            // )
+            /* Version 1 code end */
+
+            /* Version 2 code start */
+            PrizeApi.selectPrize(this.props.prizes).then(res => {
+                let prizeIndex = res
+
+                // circular flashing light timer
+                if (this.timer) {
+                    clearTimeout(this.timer)
+                }
+                this.timer = setInterval(
+                    () => this.tick(prizeIndex),
+                    80
+                )
+            })
+            /* Version 2 code end */
+
         } else {
             console.log("You don't have enough gems!")
             this.setState({
@@ -52,44 +74,46 @@ export default class LuckyBoard extends PureComponent {
         }
     }
 
-    getPrize () {
-        // get random prize with weight
-        let prizeListWeighted = []
-        this.props.prizes.map(item => {
-            prizeListWeighted.push({
-                name: item.name,
-                image: item.image,
-                index: item.index
-            })
-            for (let i = 1; i < item.weight; i++) {
-                prizeListWeighted.push({
-                    name: item.name,
-                    image: item.image,
-                    index: item.index
-                })
-            }
-        })
-        prizeListWeighted = this.shuffle(prizeListWeighted)
-        let random = Math.floor(Math.random() * prizeListWeighted.length)
-        return prizeListWeighted[random].index
+    /* Version 1 code start */
+    // getPrize () {
+    //     // get random prize with weight
+    //     let prizeListWeighted = []
+    //     this.props.prizes.map(item => {
+    //         prizeListWeighted.push({
+    //             name: item.name,
+    //             image: item.image,
+    //             index: item.index
+    //         })
+    //         for (let i = 1; i < item.weight; i++) {
+    //             prizeListWeighted.push({
+    //                 name: item.name,
+    //                 image: item.image,
+    //                 index: item.index
+    //             })
+    //         }
+    //     })
+    //     prizeListWeighted = this.shuffle(prizeListWeighted)
+    //     let random = Math.floor(Math.random() * prizeListWeighted.length)
+    //     return prizeListWeighted[random].index
 
-        // return Math.floor(Math.random() * 8) // former version: equal probability for each prize
-    }
+    //     // return Math.floor(Math.random() * 8) // former version: equal probability for each prize
+    // }
 
-    shuffle (list) {
-        let copy = [...list]
-        for (let i = 0; i < copy.length; i++) {
-            let randIndex = this.getRandomIndex(0, copy.length - 1)
-            let temp = copy[i]
-            copy[i] = copy[randIndex]
-            copy[randIndex] = temp
-        }
-        return copy
-    }
+    // shuffle (list) {
+    //     let copy = [...list]
+    //     for (let i = 0; i < copy.length; i++) {
+    //         let randIndex = this.getRandomIndex(0, copy.length - 1)
+    //         let temp = copy[i]
+    //         copy[i] = copy[randIndex]
+    //         copy[randIndex] = temp
+    //     }
+    //     return copy
+    // }
 
-    getRandomIndex (start, end) {
-        return Math.floor(start + Math.random()*(end - start + 1));
-    }
+    // getRandomIndex (start, end) {
+    //     return Math.floor(start + Math.random()*(end - start + 1));
+    // }
+    /* Version 1 code end */
 
     tick (prizeIndex) {
         if (this.state.currentIndex + 1 === 8) {
