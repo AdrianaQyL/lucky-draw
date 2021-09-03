@@ -7,7 +7,7 @@ This is a lucky draw board with different potential prizes. Try your luck today!
 [![](https://img.shields.io/badge/integrate_with-Airtable-yellow.svg)](https://www.airtable.com/)
 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and is for [ByteDance Youth Camp 2021](https://youthcamp.bytedance.com/).
 
 ## How to run the project locally
 
